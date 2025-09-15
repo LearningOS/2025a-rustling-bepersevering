@@ -5,10 +5,9 @@
 // Execute `rustlings hint enums3` or use the `hint` watch subcommand for a
 // hint.
 
-// I AM NOT DONE
-
 enum Message {
     // TODO: implement the message variant types based on their usage below
+    Move {x: i32, y: i32}, Echo(String), ChangeColor(u8, u8, u8), Quit
 }
 
 struct Point {
