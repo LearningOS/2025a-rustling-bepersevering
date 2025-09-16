@@ -7,7 +7,7 @@
 
 enum Message {
     // TODO: implement the message variant types based on their usage below
-    Move {x: i32, y: i32},
+    Move(Point),
     Echo(String),
     ChangeColor(u8, u8, u8),
     Quit
@@ -46,7 +46,7 @@ impl State {
         // Remember: When passing a tuple as a function argument, you'll need
         // extra parentheses: fn function((t, u, p, l, e))
         match message {
-            Message::Move {x, y} => self.move_position(Point {x: x as u8, y: y as u8}),
+            Message::Move(p) => self.move_position(p),
             Message::Echo(s) => self.echo(s),
             Message::ChangeColor(r, g, b) => self.change_color((r, g, b)),
             Message::Quit => self.quit(),
