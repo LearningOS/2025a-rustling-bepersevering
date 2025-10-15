@@ -7,7 +7,7 @@
 // hint.
 
 struct Wrapper<T> {
-    value: u32,
+    value: T,
 }
 
 impl<T> Wrapper<T> {
