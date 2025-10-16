@@ -36,7 +36,18 @@
 
 // I AM NOT DONE
 
-fn main() {}
+use std::time::SystemTime;
+
+fn main() {
+    let timestamp = SystemTime::now()
+        .duration_since(SystemTime::UNIX_EPOCH)
+        .unwrap()
+        .as_secs();
+
+    // 设置 TEST_FOO 环境变量
+    println!("cargo:rustc-env=TEST_FOO={}", timestamp);
+    println!("cargo:rerun-if-env-changed=TEST_FOO");
+}
 
 #[cfg(test)]
 mod tests {
