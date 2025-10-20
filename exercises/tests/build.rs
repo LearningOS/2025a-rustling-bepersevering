@@ -10,11 +10,11 @@ fn main() {
         .duration_since(std::time::UNIX_EPOCH)
         .unwrap()
         .as_secs(); // What's the use of this timestamp here?
-    let your_command = format!(
-        "Your command here with {}, please checkout exercises/tests/build.rs",
-        timestamp
-    );
+    let your_command = format!("rustc-env=TEST_FOO={}", timestamp);
+
     println!("cargo:{}", your_command);
+    // 告诉 Cargo 当 TEST_FOO 环境变量变化时重新运行构建脚本
+    println!("cargo:rerun-if-env-changed=TEST_FOO");
 
     // In tests8, we should enable "pass" feature to make the
     // testcase return early. Fill in the command to tell

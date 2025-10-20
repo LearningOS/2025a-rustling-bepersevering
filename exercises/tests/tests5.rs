@@ -31,7 +31,7 @@ unsafe fn modify_by_address(address: usize) {
     // comment of the test below as your format reference.
     unsafe {
         let ptr = address as *mut u32;
-        ptr = 0xAABBCCDD;
+        *ptr = 0xAABBCCDD;
     }
 }
 
