@@ -11,14 +11,11 @@ fn main() {
         .unwrap()
         .as_secs(); // What's the use of this timestamp here?
     let your_command = format!("rustc-env=TEST_FOO={}", timestamp);
-
     println!("cargo:{}", your_command);
-    // 告诉 Cargo 当 TEST_FOO 环境变量变化时重新运行构建脚本
-    println!("cargo:rerun-if-env-changed=TEST_FOO");
 
     // In tests8, we should enable "pass" feature to make the
     // testcase return early. Fill in the command to tell
     // Cargo about that.
-    let your_command = "Your command here, please checkout exercises/tests/build.rs";
-    println!("cargo:{}", your_command);
+    let your_command1 = "rustc-cfg=feature=\"pass\"";
+    println!("cargo:{}", your_command1);
 }
