@@ -84,6 +84,7 @@ impl<T> LinkedList<T> {
 
                 (*node).next = prev;
                 (*node).prev = next;
+                current_node = next;
             }
 
         }
