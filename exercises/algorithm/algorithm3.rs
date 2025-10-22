@@ -3,10 +3,21 @@
 	This problem requires you to implement a sorting algorithm
 	you can use bubble sorting, insertion sorting, heap sorting, etc.
 */
-// I AM NOT DONE
 
-fn sort<T>(array: &mut [T]){
-	//TODO
+fn sort<T: PartialOrd>(array: &mut [T]){
+    if array.is_empty() || array.len() <= 1 {
+        return;
+    }
+
+    let length = array.len();
+    for i in 0..length {
+        for j in 0..length-i-1 {
+            if array[j] > array[j+1] {
+                array.swap(j, j+1);
+            }
+        }
+    }
+
 }
 #[cfg(test)]
 mod tests {
