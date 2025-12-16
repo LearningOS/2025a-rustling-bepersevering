@@ -42,20 +42,16 @@ where
 
     // Insert a value into the BST
     fn insert(&mut self, value: T) {
-        match &mut self.root {
-            Some(node) => {
-                node.insert(value);
-            }
-            None => {
-                self.root = Some(Box::new(TreeNode::new(value)));
-            }
+        match self.root {
+            Some(ref mut node) => node.insert(value),
+            None => self.root = Some(Box::new(TreeNode::new(value))),
         }
     }
 
     // Search for a value in the BST
     fn search(&self, value: T) -> bool {
-        match &self.root {
-            Some(node) => node.search(value),
+        match self.root {
+            Some(ref node) => node.search(value),
             None => false,
         }
     }
@@ -67,44 +63,31 @@ where
 {
     // Insert a node into the tree
     fn insert(&mut self, value: T) {
-        match value.cmp(&self.value) {
-            Ordering::Less => {
-                match &mut self.left {
-                    Some(left_node) => {
-                        left_node.insert(value);
-                    }
-                    None => {
-                        self.left = Some(Box::new(TreeNode::new(value)));
-                    }
-                }
-            }
-            Ordering::Greater => {
-                match &mut self.right {
-                    Some(right_node) => {
-                        right_node.insert(value);
-                    }
-                    None => {
-                        self.right = Some(Box::new(TreeNode::new(value)));
-                    }
-                }
-            }
-            Ordering::Equal => {
-            }
+        match self.value.cmp(&value) {
+            Ordering::Equal => {}
+            Ordering::Greater => match self.right {
+                Some(ref mut rnode) => rnode.insert(value),
+                None => self.right = Some(Box::new(TreeNode::new(value))),
+            },
+            Ordering::Less => match self.left {
+                Some(ref mut lnode) => lnode.insert(value),
+                None => self.left = Some(Box::new(TreeNode::new(value))),
+            },
         }
     }
 
     // Search for a value in the tree
     fn search(&self, value: T) -> bool {
-        match value.cmp(&self.value) {
-            Ordering::Less => match &self.left {
-                Some(left_node) => left_node.search(value),
-                None => false,
-            },
-            Ordering::Greater => match &self.right {
-                Some(right_node) => right_node.search(value),
-                None => false,
-            },
+        match self.value.cmp(&value) {
             Ordering::Equal => true,
+            Ordering::Greater => match self.right {
+                Some(ref rnode) => rnode.search(value),
+                None => false,
+            },
+            Ordering::Less => match self.left {
+                Some(ref lnode) => lnode.search(value),
+                None => false,
+            },
         }
     }
 }
