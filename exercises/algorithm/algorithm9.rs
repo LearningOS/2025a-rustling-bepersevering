@@ -2,7 +2,6 @@
 	heap
 	This question requires you to implement a binary heap function
 */
-// I AM NOT DONE
 
 use std::cmp::Ord;
 use std::default::Default;
@@ -37,7 +36,20 @@ where
     }
 
     pub fn add(&mut self, value: T) {
-        //TODO
+        self.items.push(value);
+        self.count += 1;
+
+        let mut idx = self.count;
+       // 上浮操作
+        while idx > 1 {
+            let pidx = self.parent_idx(idx);
+            if (self.comparator)(&self.items[idx], &self.items[pidx]) {
+                self.items.swap(idx, pidx);
+                idx = pidx;
+            } else {
+                break;
+            }
+        }
     }
 
     fn parent_idx(&self, idx: usize) -> usize {
@@ -57,8 +69,24 @@ where
     }
 
     fn smallest_child_idx(&self, idx: usize) -> usize {
-        //TODO
-		0
+        let lidx = self.left_child_idx(idx);
+        let ridx = self.right_child_idx(idx);
+
+        // 如果没有左子节点，则返回0（表示没有子节点）
+        if lidx > self.count {
+            return 0;
+        }
+
+        // 如果没有右子树
+        if ridx > self.count {
+            return lidx;
+        }
+
+        if (self.comparator)(&self.items[lidx], &self.items[ridx]) {
+            lidx
+        } else {
+            ridx
+        }
     }
 }
 
@@ -84,8 +112,34 @@ where
     type Item = T;
 
     fn next(&mut self) -> Option<T> {
-        //TODO
-		None
+        if self.is_empty() {
+            return None;
+        }
+
+        let fvalue = self.items.swap_remove(1);
+        self.count -= 1;
+
+        if self.count > 0 {
+            let mut idx = 1;
+
+
+
+            while self.children_present(idx) {
+                let scidx = self.smallest_child_idx(idx);
+                if scidx == 0 {
+                    break;
+                }
+
+                if !(self.comparator)(&self.items[idx], &self.items[scidx]) {
+                    self.items.swap(idx, scidx);
+                    idx = scidx;
+                } else {
+                    break;
+                }
+            }
+        }
+
+        Some(fvalue)
     }
 }
 
